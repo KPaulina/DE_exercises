@@ -1,3 +1,7 @@
+'''
+Exercise 1: Download all the zip files from download_uris, extract csv and remove the zip files
+'''
+
 import requests
 import zipfile
 import os
