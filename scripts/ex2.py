@@ -9,6 +9,11 @@ import os
 BASE_DIR = os.path.dirname(os.path.abspath(__file__))[:-7]
 DATA_DIR = os.path.join(BASE_DIR, 'data')
 
+is_exists = os.path.isfile(DATA_DIR)
+
+if not is_exists:
+    os.makedirs(DATA_DIR)
+
 url = 'https://www.ncei.noaa.gov/data/local-climatological-data/access/2021/'
 webpage = requests.get(url)
 
