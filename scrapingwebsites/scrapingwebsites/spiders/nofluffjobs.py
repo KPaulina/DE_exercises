@@ -16,3 +16,5 @@ class JobwebSpider(scrapy.Spider):
         next_page = f"{name_of_the_page}{response.css('a[aria-label=Next]::attr(href)').get()}"
         if next_page is not None:
             yield response.follow(next_page, callback=self.parse)
+
+#scrapy crawl jobweb -O webjobs.csv
