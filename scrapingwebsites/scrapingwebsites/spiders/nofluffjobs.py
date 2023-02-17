@@ -1,10 +1,15 @@
 import scrapy
 
 
+from scrapy.loader import ItemLoader
+from scrapy.crawler import CrawlerProcess
+
+
 class JobwebSpider(scrapy.Spider):
     name = 'jobweb'
     allowed_domains = ['nofluffjobs.com']
     start_urls = ['https://nofluffjobs.com/pl/python?page=1']
+
     def parse(self, response):
         name_of_the_page = 'https://nofluffjobs.com'
         for item in response.css('a.posting-list-item'):
@@ -17,4 +22,10 @@ class JobwebSpider(scrapy.Spider):
         if next_page is not None:
             yield response.follow(next_page, callback=self.parse)
 
-#scrapy crawl jobweb -O webjobs.csv
+
+# process = CrawlerProcess(settings={
+#     "FEEDS": {
+#         f"nofluffjons_{DATE}.json": {"format": "json"},
+#     },
+# })
+#
