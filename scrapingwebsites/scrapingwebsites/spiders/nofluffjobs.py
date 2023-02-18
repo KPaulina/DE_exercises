@@ -11,26 +11,63 @@ DATE = str(datetime.now())[:10]
 class JobwebSpider(scrapy.Spider):
     name = 'jobweb'
     allowed_domains = ['nofluffjobs.com']
-    start_urls = ['https://nofluffjobs.com/pl/python?page=1']
+    start_urls = ['https://nofluffjobs.com/pl/python?page=1', f'https://nofluffjobs.com/pl/python?page=1', 'https://nofluffjobs.com/.NET?page=1']
 
     def parse(self, response):
         name_of_the_page = 'https://nofluffjobs.com'
         for item in response.css('a.posting-list-item'):
             if item.css('span.text-uppercase.new-label.flex-shrink-0.ng-star-inserted::text').get() is not None:
-                yield {
-                    'job title': item.css('h3.posting-title__position::text').get(),
-                    'company_name': item.css('span.posting-title__company::text').get(),
-                    'link': f"{name_of_the_page}{item.css('a.posting-list-item::attr(href)').get()}",
-                    'date': f"{DATE}",
-                    'is_new': item.css('span.text-uppercase.new-label.flex-shrink-0.ng-star-inserted::text').get().strip()
-                }
-            else:
-                yield {
-                    'job title': item.css('h3.posting-title__position::text').get (),
-                    'company_name': item.css('span.posting-title__company::text').get (),
-                    'link': f"{name_of_the_page}{item.css ('a.posting-list-item::attr(href)').get ()}",
-                    'date': f"{DATE}"
-                }
+                if 'python' in str(response):
+                    yield {
+                        'job title': item.css('h3.posting-title__position::text').get(),
+                        'company_name': item.css('span.posting-title__company::text').get(),
+                        'link': f"{name_of_the_page}{item.css('a.posting-list-item::attr(href)').get()}",
+                        'date': f"{DATE}",
+                        'is_new': item.css('span.text-uppercase.new-label.flex-shrink-0.ng-star-inserted::text').get().strip(),
+                        'programming_language': 'Python'
+                    }
+                else:
+                    yield {
+                        'job title': item.css('h3.posting-title__position::text').get(),
+                        'company_name': item.css('span.posting-title__company::text').get(),
+                        'link': f"{name_of_the_page}{item.css ('a.posting-list-item::attr(href)').get()}",
+                        'date': f"{DATE}",
+                        'programming_language': 'Python'
+                    }
+                if 'java' in str(response):
+                    yield {
+                        'job title': item.css('h3.posting-title__position::text').get(),
+                        'company_name': item.css('span.posting-title__company::text').get(),
+                        'link': f"{name_of_the_page}{item.css('a.posting-list-item::attr(href)').get()}",
+                        'date': f"{DATE}",
+                        'is_new': item.css('span.text-uppercase.new-label.flex-shrink-0.ng-star-inserted::text').get().strip(),
+                        'programming_language': 'Java'
+                    }
+                else:
+                    yield {
+                        'job title': item.css('h3.posting-title__position::text').get(),
+                        'company_name': item.css('span.posting-title__company::text').get(),
+                        'link': f"{name_of_the_page}{item.css ('a.posting-list-item::attr(href)').get()}",
+                        'date': f"{DATE}",
+                        'programming_language': 'Java'
+                    }
+                if '.NET' in str(response):
+                    yield {
+                        'job title': item.css('h3.posting-title__position::text').get(),
+                        'company_name': item.css('span.posting-title__company::text').get(),
+                        'link': f"{name_of_the_page}{item.css('a.posting-list-item::attr(href)').get()}",
+                        'date': f"{DATE}",
+                        'is_new': item.css('span.text-uppercase.new-label.flex-shrink-0.ng-star-inserted::text').get().strip(),
+                        'programming_language': 'NET'
+                    }
+                else:
+                    yield {
+                        'job title': item.css('h3.posting-title__position::text').get(),
+                        'company_name': item.css('span.posting-title__company::text').get(),
+                        'link': f"{name_of_the_page}{item.css ('a.posting-list-item::attr(href)').get()}",
+                        'date': f"{DATE}",
+                        'programming_language': 'NET'
+                    }
 
         next_page = f"{name_of_the_page}{response.css('a[aria-label=Next]::attr(href)').get()}"
         if next_page is not None:
