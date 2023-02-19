@@ -9,9 +9,9 @@ DATE = str(datetime.now())[:10]
 
 
 class JobwebSpider(scrapy.Spider):
-    name = 'jobweb'
+    name = 'nofluffjobs_java'
     allowed_domains = ['nofluffjobs.com']
-    start_urls = [f'https://nofluffjobs.com/pl/python?page=1']
+    start_urls = [f'https://nofluffjobs.com/pl/java?page=1']
 
     def parse(self, response):
         name_of_the_page = 'https://nofluffjobs.com'
@@ -23,7 +23,7 @@ class JobwebSpider(scrapy.Spider):
                         'link': f"{name_of_the_page}{item.css('a.posting-list-item::attr(href)').get()}",
                         'date': f"{DATE}",
                         'is_new': item.css('span.text-uppercase.new-label.flex-shrink-0.ng-star-inserted::text').get().strip(),
-                        'programming_language': 'Python'
+                        'programming_language': 'Java'
                     }
             else:
                     yield {
@@ -31,7 +31,7 @@ class JobwebSpider(scrapy.Spider):
                         'company_name': item.css('span.posting-title__company::text').get(),
                         'link': f"{name_of_the_page}{item.css ('a.posting-list-item::attr(href)').get()}",
                         'date': f"{DATE}",
-                        'programming_language': 'Python'
+                        'programming_language': 'Java'
                     }
 
             next_page = f"{name_of_the_page}{response.css('a[aria-label=Next]::attr(href)').get()}"
