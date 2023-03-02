@@ -1,5 +1,5 @@
 '''
-Scraping CSV files whose date is 2022-02-07 14:03
+Scraping CSV files with date is 2022-02-07 14:03
 '''
 
 from bs4 import BeautifulSoup
