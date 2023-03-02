@@ -1,6 +1,6 @@
 #!/bin/bash
 cd scrapingwebsites
-scrapy crawl nofluffjobs_python
+scrapy crawl jobweb
 sleep 10
 scrapy crawl nofluffjobs_java
 sleep 10
